@@ -10,7 +10,12 @@ import {
   HStack,
   Image,
 } from "@chakra-ui/react";
-const CartItem = ({ img, title, price, amount }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { increase } from "../redux/AppReducer/action";
+
+const CartItem = ({ id, img, title, price, amount }) => {
+  const dispatch = useDispatch();
+  console.log(amount);
   return (
     <>
       <Grid templateColumns="repeat(4, 1fr)" gap={6}>
@@ -36,17 +41,20 @@ const CartItem = ({ img, title, price, amount }) => {
               </Box>
 
               <Box>
-                {price}
-                <Box as="span" color="gray.600" fontSize="sm">
-                  INR
-                </Box>
+                ${price}
+                <Box as="span" color="gray.600" fontSize="sm"></Box>
               </Box>
 
               <Box display="flex" mt="2" alignItems="center"></Box>
               <Flex gap={2} justifyContent={"center"} m={"0.5rem"}>
                 <Button colorScheme="red">-</Button>
                 <Heading>{amount}</Heading>
-                <Button colorScheme="red">+</Button>
+                <Button
+                  colorScheme="red"
+                  onClick={() => dispatch(increase(id))}
+                >
+                  +
+                </Button>
               </Flex>
               <Button colorScheme="blue">Add To Cart</Button>
             </Box>
